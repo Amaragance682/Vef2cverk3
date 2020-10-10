@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Nanari upplysingar{% endblock %}
+{% block content %}
+    <h1>nanari upplysingar</h1>
+
+    {% for item in gogn['results'] %}
+        {% if item.key == k %}
+            <h3>stadur: {{ item.name }}</h3>
+            <h3>soduadili: {{ item.company }}</h3>
+            <h3>verd a 1. litra af bensini</h3>
+            <h3>verd a 1. litra af diesel: {{ item.diesel }}</h3>
+
+            <div class="kort">
+                <h4>stadsettning bensinstodvar</h4>
+                <ul>
+                    <li>breiddargrada: {{ item.geo.lat }}</li>
+                    <li>lengdargrada: {{ item.geo.lon }}</li>
+                    <li><a href="https://www.google.com/maps/@{{items.geo.lat}},{{item.geo.lon}}/,17z">stadsettning a google</li>
+                </ul>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}
