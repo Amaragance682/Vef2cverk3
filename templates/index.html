@@ -1,26 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Eldsneytisverd - midannarverkefni - json{% endblock %}
-{% block content %}
-<div class="wrapper">
-    {% set oneCo = [] %}
-    {% for item in gogn['results'] %}
-        {% if item.company not in oneCo %}
-            {% do oneCo.append(item.company) %}
-            <div class='box'>
-                <a href="/company/{{ item.company }}">
-                    <img src="static/{{ item.company }}.png" title="{{ item.comany }}">
-                </a>
-            </div>
-        {% endif %}
-    {% endfor %}
-</div>
-<div class="kort">
-    <h2> Besta verdid</h2>
-    <h4> Odyrasta bensinid: {{ minP[1] }} kr. {{ minP[0] }} Stadur: {{ minP[2] }} </h4>
-    <h4> Odyrasta dieselolian: </h4>
-</div>
-<p>verdskra sidast uppfaerd: {{gogn.timestapPriceChanges | format_time }}</p>
-<p><a href="/">forsida</a></p>
-{% endblock %}
 
-<p> verdskra uppfaerd</p>
+{% block title %} Verkefni {% endblock %}
+{% block content %}
+    <h1>
+        Verkefni 2
+    </h1>
+
+    <p><a href="/a-hluti">verkefni 2.1. dynamisk rap</a></p>
+    <p><a href="/b-hluti">verkefni 2.2. jinja grunnsidur</a></p>
+{% endblock %}

@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/static/styles.css">
     <title>{% block title %} {% endblock %} - VEFT2VF</title>
-    
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     {% include "haus.html" ignore missing %}
-    <main>
+    <main class="row">
         {% block content %} {% endblock %}
     </main>
     <footer>&copy; olafur saer sigursteinsson</footer>

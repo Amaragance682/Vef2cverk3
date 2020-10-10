@@ -1,56 +1,41 @@
-from flask import Flask, render_template, json
-import urllib.request
-import os
-from jinja2 import ext
-from datetime import datetime
+from flask import Flask, render_template
 
+import urllib.request
 app = Flask(__name__)
 
-app.jinja_env.add_extension(ext.do)
-
-def format_time(gogn):
-    return datetime.strptime(gogn, '%Y-%m-%dT%H:%M.%S.%f').strftime('%d. %m. %Y Kl. %H:%M')
-
-app.jinja_env.add_extension(ext.do)
-
-app.jinja_env.filters['format_time'] = format_time
-
-#bensinstodvar json skra
-with urllib.request.urlopen("http://apis.is/petrol/") as url:
-    gogn = json.loads(url.read().decode())
-
-#laegsta verdid
-
-def minPetrol():
-    minPetrolPrice = 1000
-    company = None
-    address = None
-    lst = gogn['results']
-    for i in lst:
-        if i['bensin95'] is not None:
-            if i['bensin95'] < minPetrolPrice:
-                minPetrolPrice = i ['bensin95']
-                company = i['company']
-                address = i['name']
-    return [minPetrolPrice, company, address]
-
-
-#forsidan
 @app.route('/')
-def index():
-    return render_template('index.html', gogn=gogn, minP=minPetrol() )
+def home():
+    return render_template('index.html')
 
-@app.route('/company/<company>')
-def comp(company):
-    return render_template('company.html', gogn=gogn, com=company)
+@app.route('/a-hluti')
+def ahluti():
+    return render_template('kennitala.html')
 
-@app.route('/moreinfo/<key>')
-def more(key):
-    return render_template('moreinfo.html', gogn=gogn, k=key)
+# listi (dicticonary)
 
-@app.route('/gengi')
-def currency():
-    return render_template('gengi.html', gogn=gogn)
+frettir = [
+    ["0","Fyrirsogn 0","Innihald frettar 0","hofundur 0"],
+    ["1","Fyrirsogn 1","Innihald frettar 1","hofundur 1"],
+    ["2","Fyrirsogn 2","Innihald frettar 2","hofundur 2"],
+    ["3","Fyrirsogn 3","Innihald frettar 3","hofundur 3"],
+    ["4","Fyrirsogn 4","Innihald frettar 4","hofundur 4"],
+    ["5","Fyrirsogn 5","Innihald frettar 5","hofundur 5"],
+] 
+
+@app.route('/ktsida/<kt>')
+def ktsum(kt):
+    summa = 0
+    for item in kt:
+        summa = summa + int(item)
+    return render_template('ktsum.html' , kt=kt , summa=summa)
+
+@app.route('/b-hluti')
+def bhluti():
+    return render_template('frettir.html' , frettir = frettir)
+
+@app.route('/frett/<int:id>')
+def news(id):
+    return render_template('frett.html', frett=frettir[id],nr=id)
 
 @app.errorhandler(404)
 def pagenotfound(error):
